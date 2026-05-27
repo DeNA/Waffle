@@ -223,13 +223,13 @@ return Render($"""
 
 </details>
 
-| Method           |           Mean |         Error |        StdDev |      Ratio |  RatioSD | Allocated | Alloc Ratio |
-|------------------|---------------:|--------------:|--------------:|-----------:|---------:|----------:|------------:|
-| T4               | 699,690.146 us | 5,316.1834 us | 4,439.2539 us | 139,364.94 | 1,617.58 | 359.59 KB |        9.44 |
-| T4(preprocessed) |       8.349 us |     0.1633 us |     0.1527 us |       1.66 |     0.03 | 111.91 KB |        2.94 |
-| Scriban          |     180.910 us |     0.7707 us |     0.6832 us |      36.03 |     0.38 | 254.16 KB |        6.67 |
-| Waffle           |      32.696 us |     0.0608 us |     0.0568 us |       6.51 |     0.07 |  39.75 KB |        1.04 |
-| StringBuilder    |       5.021 us |     0.0547 us |     0.0512 us |       1.00 |     0.01 |  38.09 KB |        1.00 |
+| Method           | Mean           | Error         | StdDev        | Ratio      | RatioSD  | Allocated | Alloc Ratio |
+|----------------- |---------------:|--------------:|--------------:|-----------:|---------:|----------:|------------:|
+| T4               | 673,518.013 us | 9,043.6142 us | 8,459.4023 us | 138,006.44 | 3,469.61 | 359.72 KB |        9.44 |
+| T4(preprocessed) |       7.936 us |     0.0341 us |     0.0302 us |       1.63 |     0.04 | 111.91 KB |        2.94 |
+| Scriban          |     173.724 us |     0.7521 us |     0.6280 us |      35.60 |     0.79 | 254.16 KB |        6.67 |
+| Waffle           |      29.869 us |     0.2518 us |     0.2355 us |       6.12 |     0.14 |  39.75 KB |        1.04 |
+| StringBuilder    |       4.883 us |     0.0943 us |     0.1123 us |       1.00 |     0.03 |  38.09 KB |        1.00 |
 
 - **T4** uses Mono.TextTemplating v3.0.0. The measurement covers the full pipeline — parsing a template defined as a
   string literal through to final string output (no file I/O).
