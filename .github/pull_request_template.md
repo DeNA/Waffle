@@ -17,7 +17,7 @@
 
 - [ ] All existing tests pass (`dotnet test -c Debug`)
 - [ ] New functionality is covered by tests
-- [ ] This PR targets the `develop` branch
+- [ ] This PR targets the `main` branch
 
 ## Contribution License Agreement
 
