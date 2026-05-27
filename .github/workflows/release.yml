@@ -37,12 +37,9 @@ jobs:
           PKG_SOURCE: "https://api.nuget.org/v3/index.json"
         run: |
           dotnet pack --no-build --no-restore -p:Version="$TAG_NAME" -p:PackageVersion="$TAG_NAME" "$SLN_PATH" -c Release -o nupkg
-          dotnet nuget push "nupkg/Waffle.Core.$TAG_NAME.nupkg" --source "$PKG_SOURCE" --api-key "$NUGET_API_KEY"
-          dotnet nuget push "nupkg/Waffle.Bakery.$TAG_NAME.nupkg" --source "$PKG_SOURCE" --api-key "$NUGET_API_KEY"
-          dotnet nuget push "nupkg/Waffle.ModelProxy.$TAG_NAME.nupkg" --source "$PKG_SOURCE" --api-key "$NUGET_API_KEY"
-          dotnet nuget push "nupkg/Waffle.Core.$TAG_NAME.snupkg" --source "$PKG_SOURCE" --api-key "$NUGET_API_KEY"
-          dotnet nuget push "nupkg/Waffle.Bakery.$TAG_NAME.snupkg" --source "$PKG_SOURCE" --api-key "$NUGET_API_KEY"
-          dotnet nuget push "nupkg/Waffle.ModelProxy.$TAG_NAME.snupkg" --source "$PKG_SOURCE" --api-key "$NUGET_API_KEY"
+          dotnet nuget push "nupkg/Waffle.Core.$TAG_NAME.nupkg" --source "$PKG_SOURCE" --api-key "$NUGET_API_KEY" --skip-duplicate
+          dotnet nuget push "nupkg/Waffle.Bakery.$TAG_NAME.nupkg" --source "$PKG_SOURCE" --api-key "$NUGET_API_KEY" --skip-duplicate
+          dotnet nuget push "nupkg/Waffle.ModelProxy.$TAG_NAME.nupkg" --source "$PKG_SOURCE" --api-key "$NUGET_API_KEY" --skip-duplicate
       - name: Create Release
         uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2.6.2 # zizmor: ignore[superfluous-actions]
         with:
