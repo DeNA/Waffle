@@ -246,6 +246,15 @@ Intel Core Ultra 9 285K 3.70GHz, 1 CPU, 24 logical and 24 physical cores<br>
 
 </details>
 
+<details>
+<summary>Third party notices</summary>
+
+The benchmark project references Scriban (BSD-2-Clause), BenchmarkDotNet (MIT), and Mono.TextTemplating (MIT) via
+NuGet for comparison purposes only. None of these are dependencies of the published Waffle packages.
+
+</details>
+
+
 ## Requirements
 
 All library packages (Waffle.Core, Waffle.Bakery, Waffle.ModelProxy) target **netstandard2.0**, making them compatible
