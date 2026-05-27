@@ -3,7 +3,9 @@
 <img src="./docs/waffle.png" width="200" alt="Waffle">
 
 ![unit-tests](https://github.com/DeNA/Waffle/actions/workflows/unit-tests.yml/badge.svg?branch=main)
-[![NuGet](https://img.shields.io/nuget/v/Waffle.Core.svg?logo=nuget)](https://www.nuget.org/packages/Waffle.Core)
+[![Core](https://img.shields.io/nuget/vpre/Waffle.Core.svg?label=Waffle.Core&logo=nuget)](https://www.nuget.org/packages/Waffle.Core)
+[![ModelProxy](https://img.shields.io/nuget/vpre/Waffle.ModelProxy.svg?label=Waffle.ModelProxy&logo=nuget)](https://www.nuget.org/packages/Waffle.ModelProxy)
+[![Bakery](https://img.shields.io/nuget/vpre/Waffle.Bakery.svg?label=Waffle.Bakery&logo=nuget)](https://www.nuget.org/packages/Waffle.Bakery)
 ![.NET Standard 2.0](https://img.shields.io/badge/.NET%20Standard-2.0-blueviolet)
 [![License: MIT](https://img.shields.io/github/license/DeNA/Waffle)](LICENSE)
 
