@@ -1,4 +1,4 @@
-# Waffle🧇  ![unit-tests](https://github.com/DeNA/Waffle/actions/workflows/unit-tests.yml/badge.svg?branch=develop)
+# Waffle🧇  ![unit-tests](https://github.com/DeNA/Waffle/actions/workflows/unit-tests.yml/badge.svg?branch=main)
 
 <img src="./docs/waffle.png" width="200" alt="Waffle">
 
