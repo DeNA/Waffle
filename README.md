@@ -1,6 +1,11 @@
-# Waffle🧇  ![unit-tests](https://github.com/DeNA/Waffle/actions/workflows/unit-tests.yml/badge.svg?branch=main)
+# Waffle🧇
 
 <img src="./docs/waffle.png" width="200" alt="Waffle">
+
+![unit-tests](https://github.com/DeNA/Waffle/actions/workflows/unit-tests.yml/badge.svg?branch=main)
+[![NuGet](https://img.shields.io/nuget/v/Waffle.Core.svg?logo=nuget)](https://www.nuget.org/packages/Waffle.Core)
+![.NET Standard 2.0](https://img.shields.io/badge/.NET%20Standard-2.0-blueviolet)
+[![License: MIT](https://img.shields.io/github/license/DeNA/Waffle)](LICENSE)
 
 **Pure C# template engine — flow control inside interpolated strings, no DSL required.**
 
