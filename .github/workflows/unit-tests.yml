@@ -1,0 +1,42 @@
+name: Unit Tests
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  unit-test:
+    runs-on: ubuntu-latest
+    env:
+      SLN_PATH: Waffle.sln
+      DOTNET_VERSION: '10.0.x'
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        with:
+          persist-credentials: false
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@c2fa09f4bde5ebb9d1777cf28262a3eb3db3ced7 # v5.2.0
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+      - name: Install dependencies
+        run: dotnet restore "$SLN_PATH"
+      - name: Build (Debug)
+        run: dotnet build "$SLN_PATH" --no-restore -c Debug -v q -clp:ErrorsOnly
+      - name: Test (Debug)
+        run: dotnet test "$SLN_PATH" --no-restore --no-build -c Debug -clp:ErrorsOnly
+      - name: Build (Release)
+        run: dotnet build "$SLN_PATH" --no-restore -c Release -v q -clp:ErrorsOnly
+      - name: Test (Release)
+        run: dotnet test "$SLN_PATH" --no-restore --no-build -c Release -clp:ErrorsOnly

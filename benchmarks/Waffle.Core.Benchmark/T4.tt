@@ -1,0 +1,56 @@
+<#@ template language="C#" linePragmas="false" #>
+<#
+    const int N = 43;
+    for (var i = 2; i <= N; i++)
+    {
+#>
+public readonly record struct Vector<#= i #>(
+<#
+        for (var k = 0; k < i; k++)
+        {
+#>
+    float Value<#= k + 1 #><#
+            if (k == i - 1)
+            {
+#>);<#
+            }
+            else
+            {
+#>,<#
+            }
+#>
+
+<#
+        }
+    }
+#>
+
+<#
+    for (var i = 1; i < N; i++)
+    {
+        if (i % 15 == 0)
+        {
+#>
+FizzBuzz
+<#
+        }
+        else if (i % 3 == 0)
+        {
+#>
+Fizz
+<#
+        }
+        else if (i % 5 == 0)
+        {
+#>
+Buzz
+<#
+        }
+        else
+        {
+#>
+<#= i #>
+<#
+        }
+    }
+#>

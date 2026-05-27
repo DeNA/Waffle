@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>
+    <PackageReference Include="Mono.TextTemplating" Version="3.0.0"/>
+    <PackageReference Include="Scriban" Version="7.2.0"/>
+    <ProjectReference Include="..\..\src\Waffle.Core\Waffle.Core.csproj"/>
+    <ProjectReference Include="..\..\src\Waffle.Bakery\Waffle.Bakery.csproj"/>
+    <ProjectReference Include="..\..\src\Waffle.ModelProxy\Waffle.ModelProxy.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Analyzer</OutputItemType>
+    </ProjectReference>
+  </ItemGroup>
+
+</Project>

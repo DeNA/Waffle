@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <Description>Pure C# template engine based on customized string interpolation</Description>
+    <Title>Waffle.Core</Title>
+    <PackageId>Waffle.Core</PackageId>
+    <PackageTags>template;code-generation;interpolated-string;source-generator</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="$(AssemblyName).Test"/>
+    <InternalsVisibleTo Include="$(AssemblyName).Benchmark"/>
+  </ItemGroup>
+</Project>
