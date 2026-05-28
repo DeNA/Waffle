@@ -1,5 +1,8 @@
 // (c) DeNA Co., Ltd.
 
+using System;
+using System.Collections.Generic;
+
 namespace Waffle.Interpreter;
 
 /// <summary>
@@ -36,4 +39,26 @@ public readonly struct EnvValue
     /// Prefer <see cref="AsInt"/> when the value is known to be <c>int</c>.
     /// </summary>
     internal object? AsObject() => _tag == 1 ? _int : _obj;
+}
+
+internal static class EnvLookup
+{
+    /// <summary>
+    /// Retrieves a loop-variable value from the evaluation environment, throwing a user-friendly
+    /// exception when the key is absent. Absence indicates the loop variable was referenced after
+    /// its corresponding <c>For</c>/<c>ForEach</c> block ended — which the C# compiler accepts but
+    /// Waffle cannot satisfy at runtime.
+    /// </summary>
+    public static EnvValue GetLoopVariable(this Dictionary<int, EnvValue> env, int parentId)
+    {
+        if (!env.TryGetValue(parentId, out var v))
+        {
+            throw new InvalidOperationException(
+                "Loop variable is accessed outside the scope of its For/ForEach block. " +
+                "C# allows referencing a loop variable declared with `out var` after the `End` command, " +
+                "but Waffle evaluates the template at runtime and the variable no longer exists at that point. " +
+                "Move the reference inside the corresponding For/ForEach ... End block.");
+        }
+        return v;
+    }
 }

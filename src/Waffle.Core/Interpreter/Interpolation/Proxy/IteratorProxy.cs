@@ -20,7 +20,7 @@ public class IteratorProxy<T>(int parentId) : IBlockContent, IResolvableTo<T>
     public EvalResult Evaluate(Dictionary<int, EnvValue> env, int alignment, string? format)
     {
         // The actual iterator value is stored under the corresponding block's ID in the environment.
-        var it = env[_parentId].AsObject();
+        var it = env.GetLoopVariable(_parentId).AsObject();
 
         // null is a valid value for reference types and Nullable<T> value types; render as empty string.
         if (it is null)
@@ -49,7 +49,7 @@ public class IteratorProxy<T>(int parentId) : IBlockContent, IResolvableTo<T>
     /// <inheritdoc/>
     public T Resolve(Dictionary<int, EnvValue> env)
     {
-        var it = env[_parentId].AsObject();
+        var it = env.GetLoopVariable(_parentId).AsObject();
 
         if (it is null)
         {
