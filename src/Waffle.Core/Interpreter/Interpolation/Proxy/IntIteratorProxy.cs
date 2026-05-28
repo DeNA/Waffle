@@ -14,12 +14,12 @@ public class IntIteratorProxy(int parentId) : IBlockContent, IResolvableTo<int>
     /// <inheritdoc/>
     public int Resolve(Dictionary<int, EnvValue> env)
     {
-        return env[parentId].AsInt();
+        return env.GetLoopVariable(parentId).AsInt();
     }
 
     /// <inheritdoc/>
     public EvalResult Evaluate(Dictionary<int, EnvValue> env, int alignment, string? format)
     {
-        return EvalResult.Create(env[parentId].AsInt(), alignment, format);
+        return EvalResult.Create(env.GetLoopVariable(parentId).AsInt(), alignment, format);
     }
 }

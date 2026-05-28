@@ -18,7 +18,7 @@ public class NullableRefIteratorProxy<T>(int parentId) : IBlockContent, IResolva
     /// <inheritdoc/>
     public EvalResult Evaluate(Dictionary<int, EnvValue> env, int alignment, string? format)
     {
-        var it = env[parentId].AsObject();
+        var it = env.GetLoopVariable(parentId).AsObject();
 
         // null element: render as empty string.
         if (it is null)
@@ -42,7 +42,7 @@ public class NullableRefIteratorProxy<T>(int parentId) : IBlockContent, IResolva
     /// <inheritdoc/>
     public T? Resolve(Dictionary<int, EnvValue> env)
     {
-        var it = env[parentId].AsObject();
+        var it = env.GetLoopVariable(parentId).AsObject();
         return (T?)it;
     }
 }
