@@ -12,13 +12,13 @@ comma-separated arguments that collapses to empty parentheses when the list is e
 
 ### Single-line parameters
 
-The simplest approach uses `.Lazy().Join()`:
+The simplest approach uses `.AsProxy().Join()`:
 
 ```csharp
 var args = new[] { "int x", "string name", "bool flag" };
 
 Console.WriteLine(Render($$"""
-void DoSomething({{args.Lazy().Join(", ")}})
+void DoSomething({{args.AsProxy().Join(", ")}})
 """));
 ```
 
@@ -149,7 +149,7 @@ entirely when empty:
 var typeParams = new[] { "T", "U" };
 
 Console.WriteLine(Render($$"""
-class MyClass{{typeParams.Lazy().Join(", ", "<", ">")}}
+class MyClass{{typeParams.AsProxy().Join(", ", "<", ">")}}
 """));
 ```
 
