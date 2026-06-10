@@ -6,6 +6,7 @@
 [![Core](https://img.shields.io/nuget/vpre/Waffle.Core.svg?label=Waffle.Core&logo=nuget)](https://www.nuget.org/packages/Waffle.Core)
 [![ModelProxy](https://img.shields.io/nuget/vpre/Waffle.ModelProxy.svg?label=Waffle.ModelProxy&logo=nuget)](https://www.nuget.org/packages/Waffle.ModelProxy)
 [![Bakery](https://img.shields.io/nuget/vpre/Waffle.Bakery.svg?label=Waffle.Bakery&logo=nuget)](https://www.nuget.org/packages/Waffle.Bakery)
+[![Analyzer](https://img.shields.io/nuget/vpre/Waffle.Analyzer.svg?label=Waffle.Analyzer&logo=nuget)](https://www.nuget.org/packages/Waffle.Analyzer)
 ![.NET Standard 2.0](https://img.shields.io/badge/.NET%20Standard-2.0-blueviolet)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -54,11 +55,12 @@ feature-rich DSL, or Razor/Liquid compatibility — another engine may be a bett
 
 ## Packages
 
-| Package                                              | Description                                                                                                                              |
-|------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| Package                                                  | Description                                                                                                                              |
+|----------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
 | [**Waffle.Core**](src/Waffle.Core/README.md)             | Core engine: `WaffleSyntax` API, `TemplateInterpreter`, block AST, lazy-resolution pipeline                                              |
 | [**Waffle.ModelProxy**](src/Waffle.ModelProxy/README.md) | Incremental Source Generator — generates `{Type}Proxy` wrappers so model members are accessible as Waffle tokens without `.To()` lambdas |
-| [**Waffle.Bakery**](src/Waffle.Bakery/README.md)         | Batch-execution framework for running multiple templates and collecting their outputs                                                    |
+| [**Waffle.Bakery**](src/Waffle.Bakery/README.md)         | Batch-execution framework for running multiple templates and collecting their outputs                                                     |
+| [**Waffle.Analyzer**](src/Waffle.Analyzer/README.md)     | Roslyn Analyzer — detects template syntax errors (unmatched blocks, out-of-scope variables, etc.) at compile time                        |
 
 ## Installation
 
@@ -74,8 +76,18 @@ To also access model members cleanly inside loop bodies, add **Waffle.ModelProxy
 
 ```xml
 <ItemGroup>
-    <PackageReference Include="Waffle.Core" Version="1.x"/>
     <PackageReference Include="Waffle.ModelProxy" Version="1.x">
+        <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+        <OutputItemType>Analyzer</OutputItemType>
+    </PackageReference>
+</ItemGroup>
+```
+
+To catch template syntax errors (unmatched `End`, out-of-scope loop variables, misplaced `Elif`/`Else`, etc.) at compile time, add **Waffle.Analyzer**:
+
+```xml
+<ItemGroup>
+    <PackageReference Include="Waffle.Analyzer" Version="1.x">
         <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
         <OutputItemType>Analyzer</OutputItemType>
     </PackageReference>
@@ -280,9 +292,10 @@ The consuming project should support **C# 11 or later** (for interpolated string
 |---------------------------------------------------------|---------------------------------------------------------------------------------------------------|
 | [Syntax Reference](docs/syntax-reference.md)            | Complete reference for all `WaffleSyntax` commands, whitespace control, lazy resolution, and more |
 | [Recipes](docs/recipes.md)                              | Practical patterns — comma-separated lists, multi-line parameters, nested loops, and more         |
-| [Waffle.Core README](src/Waffle.Core/README.md)             | Architecture, key types, extensibility points, and Source Generator integration guide             |
-| [Waffle.ModelProxy README](src/Waffle.ModelProxy/README.md) | `[ModelProxy]` setup, generated API, and advanced proxy usage                                     |
-| [Waffle.Bakery README](src/Waffle.Bakery/README.md)         | Batch-execution framework, template registration, custom contexts                                 |
+| [Waffle.Core README](src/Waffle.Core/README.md)             | Architecture, key types, extensibility points, and Source Generator integration guide              |
+| [Waffle.ModelProxy README](src/Waffle.ModelProxy/README.md) | `[ModelProxy]` setup, generated API, and advanced proxy usage                                      |
+| [Waffle.Bakery README](src/Waffle.Bakery/README.md)         | Batch-execution framework, template registration, custom contexts                                  |
+| [Waffle.Analyzer README](src/Waffle.Analyzer/README.md)     | Compile-time diagnostic rules and their descriptions                               |
 
 ## Building from Source
 
