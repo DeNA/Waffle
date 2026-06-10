@@ -7,7 +7,7 @@
 [![ModelProxy](https://img.shields.io/nuget/vpre/Waffle.ModelProxy.svg?label=Waffle.ModelProxy&logo=nuget)](https://www.nuget.org/packages/Waffle.ModelProxy)
 [![Bakery](https://img.shields.io/nuget/vpre/Waffle.Bakery.svg?label=Waffle.Bakery&logo=nuget)](https://www.nuget.org/packages/Waffle.Bakery)
 ![.NET Standard 2.0](https://img.shields.io/badge/.NET%20Standard-2.0-blueviolet)
-[![License: MIT](https://img.shields.io/github/license/DeNA/Waffle)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **Pure C# template engine — flow control inside interpolated strings, no DSL required.**
 
