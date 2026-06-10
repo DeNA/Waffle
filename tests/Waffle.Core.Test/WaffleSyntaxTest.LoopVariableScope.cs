@@ -9,6 +9,7 @@ public partial class WaffleSyntaxTest
     // environment when the block ends. Accessing them afterwards must throw a
     // user-friendly InvalidOperationException rather than a raw KeyNotFoundException.
 
+#pragma warning disable WAF003
     [Test]
     public void For_LoopVariable_UsedAfterEnd_ThrowsFriendlyError()
     {
@@ -63,4 +64,5 @@ public partial class WaffleSyntaxTest
         Assert.That(ex!.Message, Does.Contain("For/ForEach"));
         Assert.That(ex.Message, Does.Contain("End"));
     }
+#pragma warning restore WAF003
 }

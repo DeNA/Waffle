@@ -16,6 +16,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Waffle.Core.Benchmark.Test"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Waffle.Bakery.Test", "tests\Waffle.Bakery.Test\Waffle.Bakery.Test.csproj", "{B611C504-FD3D-456D-BBF8-DA366BA58BBF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Waffle.Analyzer", "src\Waffle.Analyzer\Waffle.Analyzer.csproj", "{1F2E3D4C-5B6A-7980-8870-9A0B1C2D3E4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Waffle.Analyzer.Test", "tests\Waffle.Analyzer.Test\Waffle.Analyzer.Test.csproj", "{2E3D4C5B-6A79-8089-9978-0A1B2C3D4E5F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,5 +58,13 @@ Global
 		{B611C504-FD3D-456D-BBF8-DA366BA58BBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B611C504-FD3D-456D-BBF8-DA366BA58BBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B611C504-FD3D-456D-BBF8-DA366BA58BBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F2E3D4C-5B6A-7980-8870-9A0B1C2D3E4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F2E3D4C-5B6A-7980-8870-9A0B1C2D3E4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F2E3D4C-5B6A-7980-8870-9A0B1C2D3E4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F2E3D4C-5B6A-7980-8870-9A0B1C2D3E4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E3D4C5B-6A79-8089-9978-0A1B2C3D4E5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E3D4C5B-6A79-8089-9978-0A1B2C3D4E5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E3D4C5B-6A79-8089-9978-0A1B2C3D4E5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E3D4C5B-6A79-8089-9978-0A1B2C3D4E5F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

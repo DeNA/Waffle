@@ -40,6 +40,7 @@ jobs:
           dotnet nuget push "nupkg/Waffle.Core.$TAG_NAME.nupkg" --source "$PKG_SOURCE" --api-key "$NUGET_API_KEY" --skip-duplicate
           dotnet nuget push "nupkg/Waffle.Bakery.$TAG_NAME.nupkg" --source "$PKG_SOURCE" --api-key "$NUGET_API_KEY" --skip-duplicate
           dotnet nuget push "nupkg/Waffle.ModelProxy.$TAG_NAME.nupkg" --source "$PKG_SOURCE" --api-key "$NUGET_API_KEY" --skip-duplicate
+          dotnet nuget push "nupkg/Waffle.Analyzer.$TAG_NAME.nupkg" --source "$PKG_SOURCE" --api-key "$NUGET_API_KEY" --skip-duplicate
       - name: Create Release
         uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2.6.2 # zizmor: ignore[superfluous-actions]
         with:
@@ -52,3 +53,4 @@ jobs:
             nupkg/Waffle.Core.${{env.TAG_NAME}}.nupkg
             nupkg/Waffle.Bakery.${{env.TAG_NAME}}.nupkg
             nupkg/Waffle.ModelProxy.${{env.TAG_NAME}}.nupkg
+            nupkg/Waffle.Analyzer.${{env.TAG_NAME}}.nupkg
