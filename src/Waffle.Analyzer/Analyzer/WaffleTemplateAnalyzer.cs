@@ -31,25 +31,55 @@ public sealed class WaffleTemplateAnalyzer : DiagnosticAnalyzer
     private static void AnalyzeInvocation(SyntaxNodeAnalysisContext context)
     {
         var invocation = (InvocationExpressionSyntax)context.Node;
-        var symbol = context.SemanticModel.GetSymbolInfo(invocation).Symbol as IMethodSymbol;
 
-        if (!IsWaffleRenderMethod(symbol))
+        // Cheap syntax-only filters first; GetSymbolInfo is expensive and runs for every
+        // invocation in the compilation, so bail out before touching the semantic model.
+        if (!HasRenderMethodName(invocation.Expression))
         {
             return;
         }
 
         // The interpolated string argument may appear at different positions depending on the overload.
-        var interpolatedString = invocation.ArgumentList.Arguments
-            .Select(a => a.Expression)
-            .OfType<InterpolatedStringExpressionSyntax>()
-            .FirstOrDefault();
+        InterpolatedStringExpressionSyntax? interpolatedString = null;
+        foreach (var argument in invocation.ArgumentList.Arguments)
+        {
+            if (argument.Expression is InterpolatedStringExpressionSyntax interpolated)
+            {
+                interpolatedString = interpolated;
+                break;
+            }
+        }
+
         if (interpolatedString == null)
+        {
+            return;
+        }
+
+        var symbol = context.SemanticModel.GetSymbolInfo(invocation).Symbol as IMethodSymbol;
+        if (!IsWaffleRenderMethod(symbol))
         {
             return;
         }
 
         new TemplateBlockWalker(context.SemanticModel)
             .Analyze(interpolatedString, context.ReportDiagnostic);
+    }
+
+    /// <summary>
+    /// Syntax-only pre-filter: whether the invoked expression's simple name is
+    /// <c>Render</c> or <c>RenderCSharp</c>. The authoritative check is done later via the symbol.
+    /// </summary>
+    private static bool HasRenderMethodName(ExpressionSyntax expression)
+    {
+        // SimpleNameSyntax covers both Render(...) and explicit Render<TContext>(...) calls.
+        var name = expression switch
+        {
+            SimpleNameSyntax simple => simple.Identifier.ValueText,
+            MemberAccessExpressionSyntax member => member.Name.Identifier.ValueText,
+            _ => null,
+        };
+
+        return name is "Render" or "RenderCSharp";
     }
 
     private static bool IsWaffleRenderMethod(IMethodSymbol? method)
