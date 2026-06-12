@@ -154,14 +154,27 @@ internal readonly record struct MemberInfo(
     }
 
     /// <summary>
+    /// Precomputed parameter name lists for parameterized method accessors, indexed by parameter
+    /// count (max 4). Used both as the lambda parameter list and the call argument list.
+    /// </summary>
+    private static readonly string[] s_paramLists =
+    [
+        "",
+        "_p1",
+        "_p1, _p2",
+        "_p1, _p2, _p3",
+        "_p1, _p2, _p3, _p4",
+    ];
+
+    /// <summary>
     /// Returns the full method body expression (after =>) for a parameterized method accessor.
     /// Uses With() to combine source and all parameter resolvables.
     /// </summary>
     public string ParameterizedAccessorBody(string sourceName)
     {
         var paramCount = MethodParameters.Length;
-        var lambdaParams = string.Join(", ", Enumerable.Range(1, paramCount).Select(i => $"_p{i}"));
-        var callArgs = string.Join(", ", Enumerable.Range(1, paramCount).Select(i => $"_p{i}"));
+        var lambdaParams = s_paramLists[paramCount];
+        var callArgs = lambdaParams;
 
         string withChain;
         if (paramCount == 1)
@@ -232,8 +245,8 @@ internal readonly record struct MemberInfo(
     public string ParameterizedHasAccessorBody(string sourceName)
     {
         var paramCount = MethodParameters.Length;
-        var lambdaParams = string.Join(", ", Enumerable.Range(1, paramCount).Select(i => $"_p{i}"));
-        var callArgs = string.Join(", ", Enumerable.Range(1, paramCount).Select(i => $"_p{i}"));
+        var lambdaParams = s_paramLists[paramCount];
+        var callArgs = lambdaParams;
 
         string withChain;
         if (paramCount == 1)

@@ -75,25 +75,35 @@ internal static class SymbolExtensions
             }
         }
 
-        // Any named type (generic or not) that implements IReadOnlyList<T> — covariance handles the cast.
+        // Check AllInterfaces to detect enumerable.
+        // IReadOnlyList<T> wins immediately (covariance handles the cast); the first IEnumerable<T>
+        // is remembered as a fallback that needs .ToArray() conversion.
+        INamedTypeSymbol? enumerableInterface = null;
         foreach (var iface in namedType.AllInterfaces)
         {
-            if (iface is { IsGenericType: true, OriginalDefinition.Name: "IReadOnlyList" })
+            if (!iface.IsGenericType)
+            {
+                continue;
+            }
+
+            var ifaceName = iface.OriginalDefinition.Name;
+            if (ifaceName == "IReadOnlyList")
             {
                 elemType = iface.TypeArguments[0];
                 return true;
+            }
+
+            if (ifaceName == "IEnumerable")
+            {
+                enumerableInterface ??= iface;
             }
         }
 
-        // Any named type that implements IEnumerable<T> — needs .ToArray() conversion.
-        foreach (var iface in namedType.AllInterfaces)
+        if (enumerableInterface is not null)
         {
-            if (iface is { IsGenericType: true, OriginalDefinition.Name: "IEnumerable" })
-            {
-                elemType = iface.TypeArguments[0];
-                needsEnumerableConversion = true;
-                return true;
-            }
+            elemType = enumerableInterface.TypeArguments[0];
+            needsEnumerableConversion = true;
+            return true;
         }
 
         elemType = symbol;

@@ -110,7 +110,7 @@ namespace {{info.Ns}}
         foreach (var tuple in info.Tuples)
         {
             var originalTuple =
-                $"({string.Join(", ", tuple.Fields.Select(it => $"{it.OriginalFullTypeName} {it.Name}").ToArray())})";
+                $"({string.Join(", ", tuple.Fields.Select(it => $"{it.OriginalFullTypeName} {it.Name}"))})";
             sb.AppendLine( /* lang=cs */$$"""
 {{IsgHelper.InsertIndent(ProxyDecl(tuple.ProxyType, originalTuple, tuple.Fields, 2, true), mainIndentLevel)}}
 

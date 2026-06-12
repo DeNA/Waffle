@@ -22,7 +22,10 @@ internal sealed class TemplateBlockWalker
     {
         foreach (var content in interpolated.Contents)
         {
-            if (content is not InterpolationSyntax interpolation) continue;
+            if (content is not InterpolationSyntax interpolation)
+            {
+                continue;
+            }
 
             var expr = interpolation.Expression;
             var command = ClassifySymbol(_semanticModel.GetSymbolInfo(expr).Symbol);
@@ -34,7 +37,10 @@ internal sealed class TemplateBlockWalker
                 // from a previous block. Remove it so references inside this block are not
                 // falsely flagged as WAF003.
                 foreach (var v in ownedVars)
+                {
                     _closedVariables.Remove(v);
+                }
+
                 _blockStack.Push(new BlockFrame(interpolation, command, ownedVars));
             }
             else if (command is WaffleCommand.End)
@@ -43,7 +49,9 @@ internal sealed class TemplateBlockWalker
                 {
                     var frame = _blockStack.Pop();
                     foreach (var v in frame.OwnedVariables)
+                    {
                         _closedVariables.Add(v);
+                    }
                 }
                 else
                 {
@@ -91,7 +99,7 @@ internal sealed class TemplateBlockWalker
             }
             else if (command is WaffleCommand.Break or WaffleCommand.Continue)
             {
-                if (!_blockStack.Any(f => f.Command.IsIterationBlock))
+                if (!HasIterationFrame())
                 {
                     // WAF007: Break/Continue outside any For/ForEach block
                     report(Diagnostic.Create(
@@ -121,13 +129,35 @@ internal sealed class TemplateBlockWalker
         }
     }
 
+    private bool HasIterationFrame()
+    {
+        foreach (var frame in _blockStack)
+        {
+            if (frame.Command.IsIterationBlock)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private void CheckForOutOfScopeVariables(ExpressionSyntax expr, Action<Diagnostic> report)
     {
+        // No variable has gone out of scope yet (true until the first End of a block that owns
+        // out-vars), so the per-identifier semantic model queries below can never report anything.
+        if (_closedVariables.Count == 0)
+        {
+            return;
+        }
+
         foreach (var id in expr.DescendantNodesAndSelf().OfType<IdentifierNameSyntax>())
         {
             // Skip identifiers in "out x" position — they are being written to, not read.
             if (id.Parent is ArgumentSyntax { RefOrOutKeyword: { RawKind: (int)SyntaxKind.OutKeyword } })
+            {
                 continue;
+            }
 
             if (_semanticModel.GetSymbolInfo(id).Symbol is ILocalSymbol local
                 && _closedVariables.Contains(local))
@@ -146,12 +176,22 @@ internal sealed class TemplateBlockWalker
 
         foreach (var argument in invocation.ArgumentList.Arguments)
         {
-            if (!argument.RefOrOutKeyword.IsKind(SyntaxKind.OutKeyword)) continue;
+            if (!argument.RefOrOutKeyword.IsKind(SyntaxKind.OutKeyword))
+            {
+                continue;
+            }
+
             // out var x — new declaration, not a rebind of a closed variable
-            if (argument.Expression is DeclarationExpressionSyntax) continue;
+            if (argument.Expression is DeclarationExpressionSyntax)
+            {
+                continue;
+            }
+
             // out x — rebind; remove from closed set so subsequent references are not flagged
             if (_semanticModel.GetSymbolInfo(argument.Expression).Symbol is ILocalSymbol local)
+            {
                 _closedVariables.Remove(local);
+            }
         }
     }
 
@@ -164,7 +204,10 @@ internal sealed class TemplateBlockWalker
 
         foreach (var argument in invocation.ArgumentList.Arguments)
         {
-            if (!argument.RefOrOutKeyword.IsKind(SyntaxKind.OutKeyword)) continue;
+            if (!argument.RefOrOutKeyword.IsKind(SyntaxKind.OutKeyword))
+            {
+                continue;
+            }
 
             if (argument.Expression is DeclarationExpressionSyntax decl
                 && decl.Designation is SingleVariableDesignationSyntax designation

@@ -37,7 +37,7 @@ internal readonly record struct ModelProxyTypeInfoForCache(
     public static readonly ModelProxyTypeInfoForCache Default =
         new("", "", "", ImmutableArray<MemberInfo>.Empty, ImmutableArray<TupleInfo>.Empty);
 
-    public bool IsDefault => this.Equals(Default);
+    public bool IsDefault => OriginalFullName.Length == 0;
 
     public ModelProxyTypeInfoForCache(ITypeSymbol typeSymbol) : this(
         typeSymbol.Name,
