@@ -10,7 +10,7 @@
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>
     <PackageReference Include="Mono.TextTemplating" Version="3.0.0"/>
-    <PackageReference Include="Scriban" Version="7.2.0"/>
+    <PackageReference Include="Scriban" Version="7.2.2"/>
     <ProjectReference Include="..\..\src\Waffle.Core\Waffle.Core.csproj"/>
     <ProjectReference Include="..\..\src\Waffle.Bakery\Waffle.Bakery.csproj"/>
     <ProjectReference Include="..\..\src\Waffle.ModelProxy\Waffle.ModelProxy.csproj">
